@@ -22,13 +22,17 @@ Keep the original MIT license when redistributing this code.
 ## Renesa 1200 mm + Realme GT 7T
 
 Local verification: `testDebugUnitTest lintDebug assembleDebug` passed (5 tests,
-0 failures; lint: 0 errors, 4 nonblocking warnings). The debug APK is 105,026 bytes,
+0 failures; lint: 0 errors, 2 nonblocking warnings). The debug APK is 30,106 bytes,
 its signature verifies, and its packaged manifest requests only `TRANSMIT_IR`.
 Installed and opened on connected RMX5085 running Android 16; the screen reports
 IR ready. The user confirms ordinary fan controls and the corrected LED toggle work.
 The v1.2 compact interface was visually checked on this phone: all controls fit
 on one screen. Scrolling remains available for smaller screens and larger fonts.
 The packaged About license matches the original LICENSE byte for byte.
+v1.3 adds an original vector fan launcher icon, adaptive and monochrome variants,
+and vector fallbacks for Android 7. Lint and APK packaging passed; Android app info
+on the Realme was visually checked to confirm the new icon renders correctly.
+The icon-only update does not change the previously passing protocol code.
 
 The user has verified normal controls and LED on Renesa 1200 mm + Realme GT 7T.
 Other fan/phone combinations remain unverified by this checkout. The phone must expose its emitter through Android's `ConsumerIrManager`.

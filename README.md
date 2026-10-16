@@ -1,7 +1,7 @@
 # Atomberg IR Remote — native edition
 
 A small, offline Android remote for Atomberg BLDC fans. Compact native controls,
-light and dark themes, and no third-party runtime libraries. Only the Android IR
+light and dark themes, a matching vector fan icon, and no third-party runtime libraries. Only the Android IR
 permission is requested: no accounts, ads, analytics, or network permission.
 
 Derived from [Mobasheera/Atomberg-BLDC-IR-Remote](https://github.com/Mobasheera/Atomberg-BLDC-IR-Remote)
