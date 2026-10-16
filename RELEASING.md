@@ -12,39 +12,33 @@ Release signing-certificate SHA-256 (public fingerprint):
 c1f06eaf1af3871a6798e0404bfe7aca4abc06ddfea6f3ef1df264a673c83504
 ```
 
-## Private signing material
+## Signing credentials
 
-The maintainer's encrypted PKCS12 key is stored outside the checkout at
-`~/.android/keystores/leaf-ir-remote.p12` (private file permissions), alias
-`leaf-ir-remote`. The password is stored in macOS Keychain under service
-`io.github.vishnusrivatsava.leafirremote.release-signing`, account
-`VishnuSrivatsava`. No signing key or password is stored in GitHub or this repo.
-
-**Keep a secure backup of both the encrypted keystore and its password.** Retrieve
-the password through Keychain Access for a password-manager backup. Merely cloning
-this source repository does not preserve the ability to sign future updates.
-Do not create a replacement key if the original is unavailable: restore it first.
+Private signing keys and passwords must remain outside this repository. Keep a
+secure backup of both: cloning the source does not preserve signing capability.
+Restore the existing release key if it is unavailable rather than generating a
+replacement. Machine-specific key locations and credential-manager settings are
+kept in the maintainer's private local instructions.
 
 ## Build
 
 Use JDK 17 and Android SDK API 36; configure `JAVA_HOME` and `ANDROID_HOME` as needed.
-On the maintainer's Mac:
+Supply these four environment variables from your private credential storage:
+
+- `ANDROID_RELEASE_STORE_FILE`: absolute path to the original keystore
+- `ANDROID_RELEASE_STORE_PASSWORD`: keystore password
+- `ANDROID_RELEASE_KEY_ALIAS`: signing-key alias
+- `ANDROID_RELEASE_KEY_PASSWORD`: signing-key password
+
+Then run:
 
 ```sh
 python3 scripts/build-release.py
 ```
 
-The script reads the password into memory and passes it to Gradle through the
-environment, without placing it in command arguments or printing it. It runs
-protocol tests, release lint, and `assembleRelease`.
-
-On other machines, provide these four environment variables from private storage,
-then use the same script:
-
-- `ANDROID_RELEASE_STORE_FILE`: absolute path to the original keystore
-- `ANDROID_RELEASE_STORE_PASSWORD`: keystore password
-- `ANDROID_RELEASE_KEY_ALIAS`: `leaf-ir-remote`
-- `ANDROID_RELEASE_KEY_PASSWORD`: signing-key password
+The helper runs protocol tests, release lint, and `assembleRelease`. It uses only
+the supplied signing variables and does not read the maintainer's credential
+manager. Passwords are not placed on the Gradle command line or printed.
 
 Never put passwords in tracked files or paste them into issue/build logs. With no
 signing variables, `sh gradlew assembleRelease` deliberately produces an unsigned
