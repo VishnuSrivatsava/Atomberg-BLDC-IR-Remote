@@ -1,133 +1,49 @@
 <?xml version="1.0" encoding="utf-8"?>
-
-<androidx.constraintlayout.widget.ConstraintLayout
-    xmlns:android="http://schemas.android.com/apk/res/android"
-    xmlns:app="http://schemas.android.com/apk/res-auto"
-    xmlns:tools="http://schemas.android.com/tools"
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:background="#161616"
-    tools:context=".MainActivity">
-
-    <!-- REMOTE CONTAINER -->
-    <FrameLayout
-        android:id="@+id/remoteContainer"
-        android:layout_width="300dp"
-        android:layout_height="720dp"
-
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintEnd_toEndOf="parent">
-
-        <!-- REMOTE IMAGE -->
-        <ImageView
-            android:id="@+id/remoteImage"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:src="@drawable/remote"
-            android:scaleType="fitCenter" />
-
-        <!-- TEST POWER BUTTON -->
-        <Button
-            android:id="@+id/powerButton"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_marginTop="22dp"
-            android:layout_marginStart="180dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-        <!-- TEST SPEED1 BUTTON -->
-        <Button
-            android:id="@+id/speed1Button"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="110dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-        <!-- TEST SPEED2 BUTTON -->
-        <Button
-            android:id="@+id/speed2Button"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="155dp"
-            android:layout_marginStart="190dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-        <!-- TEST SPEED3 BUTTON -->
-        <Button
-            android:id="@+id/speed3Button"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="220dp"
-            android:layout_marginStart="160dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-        <!-- TEST SPEED4 BUTTON -->
-        <Button
-            android:id="@+id/speed4Button"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="220dp"
-            android:layout_marginStart="95dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-        <!-- TEST SPEED5 BUTTON -->
-        <Button
-            android:id="@+id/speed5Button"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginTop="155dp"
-            android:layout_marginStart="60dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-        <!-- TEST BOOST BUTTON -->
-        <Button
-            android:id="@+id/boostButton"
-            android:layout_width="55dp"
-            android:layout_height="55dp"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="160dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-        <!-- TEST TIMER BUTTON -->
-        <Button
-            android:id="@+id/timerButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="290dp"
-            android:layout_marginStart="55dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-        <!-- TEST LED BUTTON -->
-        <Button
-            android:id="@+id/ledButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_gravity="top|center_horizontal"
-            android:layout_marginTop="290dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-        <!-- TEST SLEEP BUTTON -->
-        <Button
-            android:id="@+id/sleepButton"
-            android:layout_width="50dp"
-            android:layout_height="50dp"
-            android:layout_marginTop="290dp"
-            android:layout_marginStart="192dp"
-            android:background="@android:color/transparent"
-            android:text="" />
-
-    </FrameLayout>
-
-</androidx.constraintlayout.widget.ConstraintLayout>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/remoteRoot" android:layout_width="match_parent" android:layout_height="match_parent"
+    android:fillViewport="true" android:clipToPadding="false">
+    <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content"
+        android:orientation="vertical" android:padding="20dp">
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:gravity="center_vertical">
+            <LinearLayout android:layout_width="0dp" android:layout_height="wrap_content" android:layout_weight="1" android:orientation="vertical">
+                <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/brand"
+                    android:textColor="@color/remote_muted" android:textSize="11sp" android:letterSpacing="0.14" />
+                <TextView android:id="@+id/title" android:layout_width="match_parent" android:layout_height="wrap_content"
+                    android:layout_marginTop="6dp" android:text="@string/remote_title" android:textColor="@color/remote_text"
+                    android:textSize="30sp" android:fontFamily="sans-serif-medium" />
+            </LinearLayout>
+            <Button android:id="@+id/aboutButton" android:layout_width="wrap_content" android:layout_height="48dp"
+                style="?android:attr/borderlessButtonStyle" android:text="@string/about" android:textAllCaps="false"
+                android:textColor="@color/remote_muted" android:minWidth="64dp" android:textSize="14sp" />
+        </LinearLayout>
+        <TextView android:id="@+id/status" android:layout_width="match_parent" android:layout_height="wrap_content"
+            android:minHeight="44dp" android:gravity="center_vertical" android:layout_marginTop="8dp" android:layout_marginBottom="16dp"
+            android:textColor="@color/remote_muted" android:textSize="13sp" android:accessibilityLiveRegion="polite" />
+        <Button android:id="@+id/powerButton" style="@style/RemoteButton" android:layout_width="match_parent"
+            android:layout_height="76dp" android:layout_margin="0dp" android:background="@drawable/remote_power"
+            android:textColor="@color/remote_on_accent" android:text="@string/power" android:textSize="18sp"
+            android:drawableStart="@drawable/ic_power" android:drawablePadding="12dp" android:paddingHorizontal="24dp" />
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:orientation="vertical"
+            android:layout_marginTop="16dp" android:background="@drawable/remote_card" android:padding="12dp">
+            <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:text="@string/fan_speed"
+                android:textSize="12sp" android:letterSpacing="0.08" android:textColor="@color/remote_muted" android:padding="8dp" />
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/speed1Button" style="@style/RemoteButton" android:layout_weight="1" android:text="@string/level1" android:contentDescription="@string/speed1" />
+                <Button android:id="@+id/speed2Button" style="@style/RemoteButton" android:layout_weight="1" android:text="@string/level2" android:contentDescription="@string/speed2" />
+                <Button android:id="@+id/speed3Button" style="@style/RemoteButton" android:layout_weight="1" android:text="@string/level3" android:contentDescription="@string/speed3" />
+            </LinearLayout>
+            <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content">
+                <Button android:id="@+id/speed4Button" style="@style/RemoteButton" android:layout_weight="1" android:text="@string/level4" android:contentDescription="@string/speed4" />
+                <Button android:id="@+id/speed5Button" style="@style/RemoteButton" android:layout_weight="1" android:text="@string/level5" android:contentDescription="@string/speed5" />
+                <Button android:id="@+id/boostButton" style="@style/RemoteButton" android:layout_weight="1" android:text="@string/boost" android:contentDescription="@string/boost" android:textSize="15sp" />
+            </LinearLayout>
+        </LinearLayout>
+        <LinearLayout android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="12dp">
+            <Button android:id="@+id/timerButton" style="@style/UtilityButton" android:layout_weight="1" android:text="@string/timer" android:contentDescription="@string/timer" android:drawableTop="@drawable/ic_timer" />
+            <Button android:id="@+id/ledButton" style="@style/UtilityButton" android:layout_weight="1" android:text="@string/lights" android:contentDescription="@string/led" android:drawableTop="@drawable/ic_led" />
+            <Button android:id="@+id/sleepButton" style="@style/UtilityButton" android:layout_weight="1" android:text="@string/sleep" android:contentDescription="@string/sleep" android:drawableTop="@drawable/ic_sleep" />
+        </LinearLayout>
+        <TextView android:layout_width="match_parent" android:layout_height="wrap_content" android:layout_marginTop="20dp"
+            android:gravity="center" android:text="@string/point_at_fan" android:textColor="@color/remote_muted" android:textSize="12sp" />
+    </LinearLayout>
+</ScrollView>

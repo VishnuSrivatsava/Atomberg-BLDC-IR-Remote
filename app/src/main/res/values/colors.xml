@@ -1,5 +1,10 @@
-<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="remote_background">#F2F5EF</color>
+    <color name="remote_surface">#FFFFFF</color>
+    <color name="remote_button">#E9EFE5</color>
+    <color name="remote_text">#1C2C22</color>
+    <color name="remote_muted">#53675A</color>
+    <color name="remote_accent">#284E38</color>
+    <color name="remote_on_accent">#F2F9E9</color>
+    <color name="remote_ripple">#25516A42</color>
 </resources>

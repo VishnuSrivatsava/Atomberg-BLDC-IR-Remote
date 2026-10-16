@@ -1,330 +1,58 @@
-<img width="920" height="649" alt="IR Remote" src="https://github.com/user-attachments/assets/97cf985c-6e83-45ea-a4f7-8c78adc99a03" />
-<p align="center">
-Open-source Android IR remote for Atomberg BLDC fans using verified NEC infrared commands.
-</p>
+# Atomberg IR Remote — native edition
 
-## Overview
+A small, offline Android remote for Atomberg BLDC fans. Compact native controls,
+light and dark themes, and no third-party runtime libraries. Only the Android IR
+permission is requested: no accounts, ads, analytics, or network permission.
 
-Atomberg BLDC IR Remote is an open-source Android application that allows compatible smartphones with an infrared (IR) blaster to control Atomberg BLDC ceiling fans.
+Derived from [Mobasheera/Atomberg-BLDC-IR-Remote](https://github.com/Mobasheera/Atomberg-BLDC-IR-Remote)
+by **Mobashshir Ahsan**. Released under the original [MIT License](LICENSE).
+See [NOTICE.md](NOTICE.md) for attribution and protocol research credits.
 
-The application was developed by reverse-engineering and verifying Atomberg's infrared command set, providing a lightweight and reliable alternative to the physical remote. It directly transmits NEC-format IR commands using Android's ConsumerIrManager API and does not require internet access, Bluetooth, Wi-Fi, or any external hardware.
+## Controls
 
-The current version supports essential fan controls including power, speed selection, boost mode, timer mode, and sleep mode.
+- Power toggle; speeds 1–5; boost
+- Timer and sleep, following the fan firmware's behavior
+- LED toggle, with the corrected NEC code `0x6897F300`
 
----
+Normal controls and LED have been confirmed on **Atomberg Renesa 1200 mm +
+Realme GT 7T (Android 16)**. Other devices require an IR emitter exposed through
+Android's ConsumerIrManager and support for a 38 kHz carrier. The app checks device
+support, disables unavailable controls, and reports transmission failures.
 
-## Features
+IR is one-way. The app cannot read the fan's state or receive another remote's
+signal, and does not display assumed on/off or speed selections.
 
-* Power ON/OFF control
-* Speed selection (Levels 1–5)
-* Boost mode support
-* Timer mode support
-* Sleep mode support
-* Native IR transmission using Android ConsumerIrManager
-* Verified NEC protocol implementation (38 kHz)
-* Haptic feedback on button presses
-* Lightweight and responsive interface
-* No advertisements
-* No internet connection required
-* Open-source project
+## Changes from upstream
 
-## Screenshots
+The fan command set and NEC timings are reused from the original project. This
+version replaces its image overlay with a compact, accessible native interface,
+adds device checks and error handling, and corrects the LED bit order. A published
+LED capture was converted to LSB-first; we do not claim discovery of that protocol.
+The About screen includes original author credit and the full MIT license.
 
-### Main Interface
+## Build and test
 
-<p align="center">
-  <img width="326" alt="Main Interface"
-       src="https://github.com/user-attachments/assets/0bb274f1-9b56-423a-96bd-9a9a741a3fae">
-</p>
+Use JDK 17, Android SDK API 36, and the included Gradle wrapper:
 
-<p align="center">
-  <em>Main Interface</em>
-</p>
-
-The application replicates the layout of the original Atomberg remote while providing direct infrared transmission from supported Android devices.
-
-The original remote layout has been intentionally preserved to provide a familiar user experience. By matching the physical remote as closely as possible, existing Atomberg users can operate the application without learning a new interface. This approach makes the app accessible to users of all ages and technical backgrounds, including those who may be less comfortable with modern smartphone applications.
-
-
----
-
-## Supported Functions
-
-The following functions have been verified and tested with Atomberg BLDC fans:
-
-| Function    | Status            |
-| ----------- | ----------------- |
-| Power       | ✅ Supported       |
-| Speed 1     | ✅ Supported       |
-| Speed 2     | ✅ Supported       |
-| Speed 3     | ✅ Supported       |
-| Speed 4     | ✅ Supported       |
-| Speed 5     | ✅ Supported       |
-| Boost Mode  | ✅ Supported       |
-| Timer Mode  | ✅ Supported       |
-| Sleep Mode  | ✅ Supported       |
-| LED Control | ❌ Not implemented |
-
-### Verified NEC Commands
-
-| Function | NEC Code   |
-| -------- | ---------- |
-| Power    | `6E91F300` |
-| Speed 1  | `748BF300` |
-| Speed 2  | `6F90F300` |
-| Speed 3  | `758AF300` |
-| Speed 4  | `6C93F300` |
-| Speed 5  | `7788F300` |
-| Boost    | `708FF300` |
-| Timer    | `6996F300` |
-| Sleep    | `718EF300` |
-
-## Requirements
-
-### Supported Devices
-
-This application requires an Android device equipped with a built-in infrared (IR) blaster.
-
-### Tested Devices
-
-| Device            | Status   |
-| ----------------- | -------- |
-| Redmi Note 10 Pro | ✅ Tested |
-| Redmi Note 8 Pro  | ✅ Tested |
-
-### Fan Compatibility
-
-The following Atomberg fan series are known to use the supported IR command set:
-
-#### Aris Series
-
-* Aris
-* Aris Smart
-* Aris Starlight
-* Aris Starlight Smart
-* Aris Contour
-* Aris Gladius
-* Aris Gladius Smart
-
-#### Studio Series
-
-* Studio+
-* Studio Smart+
-* Studio Nexus
-
-#### Erica Series
-
-* Erica
-* Erica Smart
-* Erica Meta
-* Erica Nuvo
-
-#### Renesa Series
-
-* Renesa+
-* Renesa Smart+
-* Renesa Prime Remote
-* Renesa Elite
-* Renesa Halo
-
-#### Other Models
-
-* Ikano
-* Efficio
-* Efficio 2
-* Efficio Prime
-
-### Verified Hardware
-
-The application has been personally tested and verified with:
-
-| Component | Model |
-|------------|------------|
-| Fan | Atomberg Erica Meta |
-| Phone | Redmi Note 10 Pro |
-| Phone | Redmi Note 8 Pro |
-
-Compatibility with additional supported models is based on the shared IR command set and community verification.
-
----
-
-## Installation
-
-1. Download the latest APK from the [Releases](https://github.com/Mobasheera/Atomberg-BLDC-IR-Remote/releases/latest) page.
-2. Install the APK on an Android device with an IR blaster.
-3. Launch the application and begin controlling your fan.
-
-## Alternative Remote Configurations
-
-For users who prefer third-party infrared remote applications, this repository also provides preconfigured remote profiles containing the same verified Atomberg NEC command set used by this application.
-
-### Downloads
-
-* [IRplus Configuration](https://github.com/Mobasheera/Atomberg-BLDC-IR-Remote/blob/main/remote-configs/Atomberg_Fan.irplus)
-* [IR Blaster Remote Backup](https://github.com/Mobasheera/Atomberg-BLDC-IR-Remote/blob/main/remote-configs/irblaster_backup_1780420947147.json)
-
-These files can be imported directly into their respective applications and provide an alternative method of controlling compatible Atomberg BLDC fans.
-
-
----
-
-## Usage
-
-1. Open the application.
-2. Point the phone's IR emitter toward the fan receiver.
-3. Press the desired button on the virtual remote.
-4. The command is transmitted immediately.
-
-For supported commands, refer to the **Supported Functions** section above.
-
-## How It Works
-
-The application uses Android's `ConsumerIrManager` API to access the infrared transmitter available on supported devices.
-
-When a button is pressed:
-
-1. The application generates an NEC-format infrared packet.
-2. The packet is encoded using the verified Atomberg command code.
-3. The signal is transmitted at a carrier frequency of 38 kHz.
-4. The fan receives and decodes the command.
-5. The corresponding action is executed by the fan.
-
-The application performs all signal generation locally and does not require:
-
-* Internet connectivity
-* Bluetooth
-* Wi-Fi
-* External hardware
-
----
-
-## IR Protocol Details
-
-### Protocol
-
-| Parameter         | Value     |
-| ----------------- | --------- |
-| Protocol          | NEC       |
-| Carrier Frequency | 38 kHz    |
-| Bit Order         | LSB First |
-| Data Length       | 32-bit    |
-
-### Timing Parameters
-
-| Parameter     | Value   |
-| ------------- | ------- |
-| Header Mark   | 9000 µs |
-| Header Space  | 4500 µs |
-| Bit Mark      | 560 µs  |
-| Logic 0 Space | 560 µs  |
-| Logic 1 Space | 1690 µs |
-| Trailer Mark  | 560 µs  |
-
-### Command Structure
-
-The application dynamically generates NEC infrared packets using the verified Atomberg command values.
-
-Example:
-
-```text
-POWER = 6E91F300
-SLEEP = 718EF300
-BOOST = 708FF300
+```sh
+sh gradlew testDebugUnitTest lintDebug assembleDebug
 ```
 
-The generated pulse train is transmitted using Android's ConsumerIrManager API at 38 kHz.
+Set `ANDROID_HOME` or configure `sdk.dir` in an untracked `local.properties` file.
+The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Debug signing is for
+local testing; keep a private release signing key for public APK updates. Never
+commit signing keys, passwords, or local device configuration.
 
-### Reverse Engineering Notes
+[TESTING.md](TESTING.md) documents hardware tests, LED provenance, and limitations.
+The IRplus profile in `remote-configs/Atomberg_Fan.irplus` also includes the LED fix.
 
-The initial Atomberg IR command set was referenced from [Glen Zac's research](https://glenzac.wordpress.com/2020/03/25/atomberg-gorilla-efficio-bldc-fan-ir-remote-codes/) on Atomberg BLDC fan infrared codes:
+## Sharing and contributing
 
-While validating the command set on real hardware, the published Sleep command was found to be non-functional on the tested fan. The Sleep command included in this project was independently reverse engineered, verified, and tested on an Atomberg Erica Meta fan.
+This is already open-source code under MIT. Preserve LICENSE and attribution when
+copying or distributing it. A public GitHub fork is the clearest way to retain
+upstream history. Changes can also be proposed upstream as a pull request.
 
-Additional undocumented NEC commands were also discovered during testing. These commands were found to control the fan's LED indicator states and appear to expose functionality intended for diagnostics, servicing, or manufacturing use.
+Source review found no tracking or networking code in this app. That does not
+verify upstream APKs or guarantee compatibility with every device or fan.
 
-The Sleep command included in this application was independently reverse engineered and validated on an Atomberg Erica Meta fan after the originally documented command failed to operate correctly during testing.
-
-Discovered undocumented commands:
-
-| Function | NEC Code   |
-| -------- | ---------- |
-| 1 LED    | `7A85F300` |
-| 2 LED    | `7986F300` |
-| 6 LED    | `738CF300` |
-
-These commands are intentionally excluded from the application because their behavior has not been fully documented or validated across all supported Atomberg fan models.
-
-## Project Structure
-
-```text
-Atomberg-BLDC-IR-Remote/
-├── app/
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/
-│   │   │   │   └── com/moba/atombergremote/
-│   │   │   │       └── MainActivity.java
-│   │   │   ├── res/
-│   │   │   │   ├── drawable/
-│   │   │   │   │   ├── remote.png
-│   │   │   │   │   └── launcher icons
-│   │   │   │   ├── layout/
-│   │   │   │   │   └── activity_main.xml
-│   │   │   │   └── mipmap/
-│   │   │   └── AndroidManifest.xml
-│   │   └── build.gradle
-│
-├── remote-configs/
-│   ├── Atomberg_Fan.irplus
-│   └── irblaster_backup_1780420947147.json
-│
-├── README.md
-├── LICENSE
-├── build.gradle.kts
-├── settings.gradle.kts
-└── gradle/
-```
-
-### Key Components
-
-| Component                           | Purpose                                                            |
-| ----------------------------------- | ------------------------------------------------------------------ |
-| MainActivity.java                   | Handles button interactions and NEC IR transmission                |
-| activity_main.xml                   | Defines the remote control user interface                          |
-| remote.png                          | Background image used to replicate the original Atomberg remote    |
-| ConsumerIrManager                   | Android API used for infrared transmission                         |
-| Atomberg_Fan.irplus                 | IRplus configuration containing verified Atomberg NEC commands     |
-| irblaster_backup_1780420947147.json | IR Blaster Remote backup containing verified Atomberg NEC commands |
-
----
-
-## License
-
-This project is licensed under the MIT License.
-
-You are free to use, modify, distribute, and adapt this project in accordance with the terms of the license.
-
-See the [LICENSE file](https://github.com/Mobasheera/Atomberg-BLDC-IR-Remote/blob/main/LICENSE) for details.
-
----
-
-## Acknowledgements
-
-Special thanks to:
-
-* Glen Zac for documenting Atomberg BLDC fan infrared commands and protocol information that served as the initial reference for this project.
-
-* The Android Open Source Project (AOSP) for providing the ConsumerIrManager API.
-
-* The Atomberg user community for sharing compatibility information and testing results across multiple fan models.
-
-### Project Contributions
-
-Additional protocol validation, command verification, Sleep command reverse engineering, Android implementation, testing, and documentation were performed as part of this project.
-
-## Author
-
-Developed and maintained by **Mobashshir Ahsan (Mobasheera)**.
-
-* GitHub: https://github.com/Mobasheera
-* Linktree: https://linktr.ee/mobashshir
+Independent community project; not affiliated with Atomberg.

@@ -1,0 +1,10 @@
+<resources>
+    <color name="remote_background">#101A16</color>
+    <color name="remote_surface">#1B2922</color>
+    <color name="remote_button">#293B30</color>
+    <color name="remote_text">#EDF4E8</color>
+    <color name="remote_muted">#A7BBAA</color>
+    <color name="remote_accent">#D1EEA3</color>
+    <color name="remote_on_accent">#1C321E</color>
+    <color name="remote_ripple">#306F8961</color>
+</resources>

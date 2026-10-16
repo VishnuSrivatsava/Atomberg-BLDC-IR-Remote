@@ -1,9 +1,31 @@
-<resources xmlns:tools="http://schemas.android.com/tools">
-    <!-- Base application theme. -->
-    <style name="Base.Theme.AtombergIRRemote" parent="Theme.Material3.DayNight.NoActionBar">
-        <!-- Customize your light theme here. -->
-        <!-- <item name="colorPrimary">@color/my_light_primary</item> -->
+<resources>
+    <style name="Theme.AtombergIRRemote" parent="android:style/Theme.Material.Light.NoActionBar">
+        <item name="android:fontFamily">sans</item>
+        <item name="android:windowBackground">@color/remote_background</item>
+        <item name="android:colorAccent">@color/remote_accent</item>
+        <item name="android:windowLightStatusBar">true</item>
+        <item name="android:statusBarColor">@color/remote_background</item>
+        <item name="android:navigationBarColor">@color/remote_background</item>
     </style>
-
-    <style name="Theme.AtombergIRRemote" parent="Base.Theme.AtombergIRRemote" />
+    <style name="RemoteButton" parent="android:style/Widget.Material.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">68dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:minWidth">48dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:background">@drawable/remote_button</item>
+        <item name="android:backgroundTint">@null</item>
+        <item name="android:stateListAnimator">@null</item>
+        <item name="android:textColor">@color/remote_text</item>
+        <item name="android:textSize">22sp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:gravity">center</item>
+        <item name="android:padding">8dp</item>
+    </style>
+    <style name="UtilityButton" parent="RemoteButton">
+        <item name="android:layout_height">76dp</item>
+        <item name="android:textSize">14sp</item>
+        <item name="android:drawablePadding">6dp</item>
+    </style>
 </resources>

@@ -1,214 +1,126 @@
 package com.moba.atombergremote;
 
+import android.app.Activity;
+import android.app.AlertDialog;
 import android.hardware.ConsumerIrManager;
+import android.os.Build;
 import android.os.Bundle;
-import android.widget.Button;
-import android.widget.Toast;
 import android.view.HapticFeedbackConstants;
+import android.view.View;
+import android.view.WindowInsets;
+import android.widget.TextView;
+import android.widget.Toast;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStreamReader;
+import java.nio.charset.StandardCharsets;
 
-import androidx.appcompat.app.AppCompatActivity;
-
-public class MainActivity extends AppCompatActivity {
-
+public class MainActivity extends Activity {
     private ConsumerIrManager irManager;
-    private static final long POWER  = 0x6E91F300L;
-    private static final long SPEED1 = 0x748BF300L;
-    private static final long SPEED2 = 0x6F90F300L;
-    private static final long SPEED3 = 0x758AF300L;
-    private static final long SPEED4 = 0x6C93F300L;
-    private static final long SPEED5 = 0x7788F300L;
-    private static final long BOOST  = 0x708FF300L;
-    private static final long TIMER  = 0x6996F300L;
-    private static final long SLEEP  = 0x718EF300L;
-
-    Button powerButton;
-    Button speed1Button;
-    Button speed2Button;
-    Button speed3Button;
-    Button speed4Button;
-    Button speed5Button;
-    Button boostButton;
-    Button timerButton;
-    Button ledButton;
-    Button sleepButton;
+    private TextView status;
+    private boolean irReady;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        // IR BLASTER DETECTION
-
-        irManager = (ConsumerIrManager) getSystemService(CONSUMER_IR_SERVICE);
-
-        if (irManager == null) {
-            Toast.makeText(this,
-                    "IR Blaster NOT detected",
-                    Toast.LENGTH_LONG).show();
-        } else {
-            Toast.makeText(this,
-                    "IR Blaster detected",
-                    Toast.LENGTH_LONG).show();
-        }
-
-        // CONNECT BUTTONS
-
-        powerButton = findViewById(R.id.powerButton);
-        speed1Button = findViewById(R.id.speed1Button);
-        speed2Button = findViewById(R.id.speed2Button);
-        speed3Button = findViewById(R.id.speed3Button);
-        speed4Button = findViewById(R.id.speed4Button);
-        speed5Button = findViewById(R.id.speed5Button);
-
-        boostButton = findViewById(R.id.boostButton);
-
-        timerButton = findViewById(R.id.timerButton);
-        ledButton = findViewById(R.id.ledButton);
-        sleepButton = findViewById(R.id.sleepButton);
-
-        // TEST CLICK LISTENERS
-
-        powerButton.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("POWER");
-
-            sendIr(POWER);
-        });
-
-        speed1Button.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("SPEED 1");
-
-            sendIr(SPEED1);
-        });
-
-        speed2Button.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("SPEED 2");
-
-            sendIr(SPEED2);
-        });
-
-        speed3Button.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("SPEED 3");
-
-            sendIr(SPEED3);
-        });
-
-        speed4Button.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("SPEED 4");
-
-            sendIr(SPEED4);
-        });
-
-        speed5Button.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("SPEED 5");
-
-            sendIr(SPEED5);
-        });
-
-        boostButton.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("BOOST");
-
-            sendIr(BOOST);
-        });
-
-        timerButton.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("TIMER");
-
-            sendIr(TIMER);
-        });
-
-        ledButton.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("LED");
-
-            // LED command not discovered yet
-        });
-
-        sleepButton.setOnClickListener(v -> {
-
-            v.performHapticFeedback(
-                    HapticFeedbackConstants.VIRTUAL_KEY);
-
-            showToast("SLEEP");
-
-            sendIr(SLEEP);
-        });
-    }
-
-    private void showToast(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-    }
-
-    private int[] buildNecSignal(long code) {
-
-        int[] pattern = new int[67];
-
-        pattern[0] = 9000;
-        pattern[1] = 4500;
-
-        for (int i = 0; i < 32; i++) {
-
-            pattern[2 + (i * 2)] = 560;
-
-            if (((code >> i) & 1) == 1) {
-                pattern[3 + (i * 2)] = 1690;
+        View root = findViewById(R.id.remoteRoot);
+        root.setOnApplyWindowInsetsListener((view, insets) -> {
+            if (Build.VERSION.SDK_INT >= 30) {
+                android.graphics.Insets bars = insets.getInsets(
+                        WindowInsets.Type.systemBars() | WindowInsets.Type.displayCutout());
+                view.setPadding(bars.left, bars.top, bars.right, bars.bottom);
             } else {
-                pattern[3 + (i * 2)] = 560;
+                view.setPadding(insets.getSystemWindowInsetLeft(), insets.getSystemWindowInsetTop(),
+                        insets.getSystemWindowInsetRight(), insets.getSystemWindowInsetBottom());
             }
+            return insets;
+        });
+        root.requestApplyInsets();
+        if (Build.VERSION.SDK_INT >= 28) {
+            findViewById(R.id.title).setAccessibilityHeading(true);
         }
-
-        pattern[66] = 560;
-
-        return pattern;
+        findViewById(R.id.aboutButton).setOnClickListener(view -> showAbout());
+        status = findViewById(R.id.status);
+        irManager = (ConsumerIrManager) getSystemService(CONSUMER_IR_SERVICE);
+        irReady = detectIr();
+        bind(R.id.powerButton, NecProtocol.Command.POWER);
+        bind(R.id.speed1Button, NecProtocol.Command.SPEED1);
+        bind(R.id.speed2Button, NecProtocol.Command.SPEED2);
+        bind(R.id.speed3Button, NecProtocol.Command.SPEED3);
+        bind(R.id.speed4Button, NecProtocol.Command.SPEED4);
+        bind(R.id.speed5Button, NecProtocol.Command.SPEED5);
+        bind(R.id.boostButton, NecProtocol.Command.BOOST);
+        bind(R.id.timerButton, NecProtocol.Command.TIMER);
+        bind(R.id.sleepButton, NecProtocol.Command.SLEEP);
+        bind(R.id.ledButton, NecProtocol.Command.LED);
     }
 
-    private void sendIr(long code) {
-
-        if (irManager == null) {
-            Toast.makeText(this,
-                    "No IR Blaster",
-                    Toast.LENGTH_SHORT).show();
-            return;
+    private boolean detectIr() {
+        try {
+            if (irManager == null || !irManager.hasIrEmitter()) {
+                status.setText(R.string.no_ir);
+                return false;
+            }
+            ConsumerIrManager.CarrierFrequencyRange[] ranges = irManager.getCarrierFrequencies();
+            if (ranges != null) {
+                boolean supported = false;
+                for (ConsumerIrManager.CarrierFrequencyRange range : ranges) {
+                    if (range.getMinFrequency() <= NecProtocol.FREQUENCY
+                            && range.getMaxFrequency() >= NecProtocol.FREQUENCY) {
+                        supported = true;
+                        break;
+                    }
+                }
+                if (!supported) {
+                    status.setText(R.string.unsupported_frequency);
+                    return false;
+                }
+            }
+            status.setText(R.string.ir_ready);
+            return true;
+        } catch (RuntimeException exception) {
+            status.setText(R.string.ir_unavailable);
+            return false;
         }
-
-        irManager.transmit(
-                38000,
-                buildNecSignal(code)
-        );
     }
 
+    private void bind(int id, NecProtocol.Command command) {
+        TextView button = findViewById(id);
+        button.setEnabled(irReady);
+        button.setAlpha(irReady ? 1f : 0.4f);
+        button.setOnClickListener(view -> {
+            view.performHapticFeedback(HapticFeedbackConstants.VIRTUAL_KEY);
+            CharSequence label = button.getContentDescription();
+            sendIr(command, (label == null ? button.getText() : label).toString());
+        });
+    }
+
+    private void showAbout() {
+        StringBuilder message = new StringBuilder(getString(R.string.credits));
+        try (BufferedReader reader = new BufferedReader(new InputStreamReader(
+                getAssets().open("LICENSE"), StandardCharsets.UTF_8))) {
+            message.append("\n\n");
+            String line;
+            while ((line = reader.readLine()) != null) {
+                message.append(line).append('\n');
+            }
+        } catch (IOException exception) {
+            message.append("\n\n").append(getString(R.string.license_unavailable));
+        }
+        new AlertDialog.Builder(this).setTitle(R.string.about_title)
+                .setMessage(message.toString())
+                .setPositiveButton(android.R.string.ok, null).show();
+    }
+
+    private void sendIr(NecProtocol.Command command, String label) {
+        if (!irReady) return;
+        try {
+            irManager.transmit(NecProtocol.FREQUENCY, NecProtocol.encode(command.code));
+            status.setText(getString(R.string.sent, label));
+        } catch (RuntimeException exception) {
+            status.setText(R.string.transmission_failed);
+            Toast.makeText(this, R.string.transmission_failed, Toast.LENGTH_LONG).show();
+        }
+    }
 }
