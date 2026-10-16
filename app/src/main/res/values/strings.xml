@@ -1,6 +1,6 @@
 <resources>
-    <string name="app_name">Atomberg IR Remote</string>
-    <string name="brand">ATOMBERG · INFRARED</string>
+    <string name="app_name">Leaf IR Remote</string>
+    <string name="brand">LEAF · INFRARED</string>
     <string name="remote_title">Fan remote</string>
     <string name="fan_speed">FAN SPEED</string>
     <string name="level1">1</string>
@@ -12,7 +12,7 @@
     <string name="point_at_fan">Point the top of your phone toward the fan.</string>
     <string name="about">About</string>
     <string name="about_title">About this remote</string>
-    <string name="credits">An independent, open-source community remote. Not affiliated with Atomberg.\n\nBased on Atomberg-BLDC-IR-Remote by Mobashshir Ahsan (Mobasheera), under the MIT License.\ngithub.com/Mobasheera/Atomberg-BLDC-IR-Remote\n\nThis version adds a compact native interface, IR compatibility checks, and a corrected LED signal. Tested on Renesa 1200 mm with Realme GT 7T.\n\nProtocol research: Glen Zac. Published LED capture: Pramod Ghuge. The LED change corrects MSB/LSB conversion; it is not a claim to discovering the protocol.\n\nNo accounts, advertisements, or network permission.</string>
+    <string name="credits">Leaf IR Remote — an independent, open-source community remote. Not affiliated with Atomberg.\n\nBased on Atomberg-BLDC-IR-Remote by Mobashshir Ahsan (Mobasheera), under the MIT License.\ngithub.com/Mobasheera/Atomberg-BLDC-IR-Remote\n\nThis version adds a compact native interface, IR compatibility checks, and a corrected LED signal. Tested on Renesa 1200 mm with Realme GT 7T.\n\nProtocol research: Glen Zac. Published LED capture: Pramod Ghuge. The LED change corrects MSB/LSB conversion; it is not a claim to discovering the protocol.\n\nNo accounts, advertisements, or network permission.</string>
     <string name="license_unavailable">The MIT license is included in the source repository as LICENSE.</string>
     <string name="power">Power on / off</string>
     <string name="speed1">Speed 1</string>

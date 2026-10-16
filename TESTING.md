@@ -1,4 +1,4 @@
-# Native remote
+# Leaf IR Remote verification
 
 This checkout reuses the MIT-licensed repository's fan commands with native Android
 buttons instead of the image overlay. It has no third-party runtime dependencies;
@@ -43,7 +43,7 @@ Unsupported devices show a message and disable transmission.
 2. Check `adb devices -l`; install with `adb install app/build/outputs/apk/debug/app-debug.apk`.
    If this package is already installed with another signing key, stop rather than
    uninstalling it automatically. Uninstalling removes that app's local data.
-3. Open Atomberg IR Remote. Keep the fan powered at its wall switch, point the
+3. Open Leaf IR Remote (or Atomberg IR Remote for historical builds). Keep the fan powered at its wall switch, point the
    phone's emitter toward it, and manually try power, then individual speeds.
 4. Observe each response. A successful Android transmit call does not prove the
    fan received it. The app does not claim to know the fan's power/speed state.
@@ -72,3 +72,16 @@ The original README's diagnostic `1/2/6 LED` commands are not exposed.
 ADB can inspect Android support and logs, but the phone's IR transmitter cannot
 receive and decode another remote. For other models where this command fails, compare the original remote's LED
 button and capture it with a 38 kHz IR receiver if available.
+
+## Standalone release
+
+v1.4.0 uses application ID `io.github.vishnusrivatsava.leafirremote` and the public
+name Leaf IR Remote. Release builds use a dedicated private signing key, not the
+Android debug key. See RELEASING.md for the build and verification procedure.
+The protocol and controls remain the hardware-verified implementation above.
+
+The v1.4.0 release build and all five protocol tests passed; release lint reported
+0 errors and 2 tool-version warnings. The APK signature verifies under the
+dedicated 3072-bit RSA key, its manifest uses the new ID and Leaf IR Remote label,
+requires Android API 24+, requests only TRANSMIT_IR, and has no debuggable flag.
+The bundled MIT notice remains byte-for-byte identical to LICENSE.

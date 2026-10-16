@@ -27,6 +27,10 @@ output-metadata.json
 # Keystore files
 *.jks
 *.keystore
+*.p12
+*.pfx
+keystore.properties
+signing.properties
 
 # Profiling
 *.hprof

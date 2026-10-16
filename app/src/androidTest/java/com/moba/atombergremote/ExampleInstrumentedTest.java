@@ -21,6 +21,6 @@ public class ExampleInstrumentedTest {
     public void useAppContext() {
         // Context of the app under test.
         Context appContext = InstrumentationRegistry.getInstrumentation().getTargetContext();
-        assertEquals("com.moba.atombergremote", appContext.getPackageName());
+        assertEquals("io.github.vishnusrivatsava.leafirremote", appContext.getPackageName());
     }
 }

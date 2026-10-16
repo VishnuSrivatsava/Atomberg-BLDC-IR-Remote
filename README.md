@@ -1,4 +1,4 @@
-# Atomberg IR Remote — native edition
+# Leaf IR Remote
 
 A small, offline Android remote for Atomberg BLDC fans. Compact native controls,
 light and dark themes, a matching vector fan icon, and no third-party runtime libraries. Only the Android IR
@@ -7,6 +7,13 @@ permission is requested: no accounts, ads, analytics, or network permission.
 Derived from [Mobasheera/Atomberg-BLDC-IR-Remote](https://github.com/Mobasheera/Atomberg-BLDC-IR-Remote)
 by **Mobashshir Ahsan**. Released under the original [MIT License](LICENSE).
 See [NOTICE.md](NOTICE.md) for attribution and protocol research credits.
+
+## Download
+
+Install the release-signed APK from [GitHub Releases](https://github.com/VishnuSrivatsava/Atomberg-BLDC-IR-Remote/releases/latest).
+Android 7 or newer and a compatible IR emitter are required.
+The standalone application ID is `io.github.vishnusrivatsava.leafirremote`; it installs
+alongside upstream and the earlier debug test app.
 
 ## Controls
 
@@ -40,8 +47,8 @@ sh gradlew testDebugUnitTest lintDebug assembleDebug
 
 Set `ANDROID_HOME` or configure `sdk.dir` in an untracked `local.properties` file.
 The debug APK is `app/build/outputs/apk/debug/app-debug.apk`. Debug signing is for
-local testing; keep a private release signing key for public APK updates. Never
-commit signing keys, passwords, or local device configuration.
+local testing. [RELEASING.md](RELEASING.md) explains release signing and verification;
+release keys and passwords are kept outside this repository.
 
 [TESTING.md](TESTING.md) documents hardware tests, LED provenance, and limitations.
 The IRplus profile in `remote-configs/Atomberg_Fan.irplus` also includes the LED fix.
